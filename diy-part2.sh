@@ -1,3 +1,4 @@
 #!/bin/bash
-sed -i 's/CONFIG_TARGET_ROOTFS_PARTSIZE=.*/CONFIG_TARGET_ROOTFS_PARTSIZE=512/' .config || \
-echo "CONFIG_TARGET_ROOTFS_PARTSIZE=512" >> .config
+# SD card imajını tamamen devre dışı bırak
+echo "# CONFIG_TARGET_ROOTFS_INITRAMFS is not set" >> .config
+grep -v "SDCARD\|sdcard" .config > /tmp/.config.tmp && mv /tmp/.config.tmp .config

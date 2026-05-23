@@ -1,13 +1,13 @@
 #!/bin/bash
-# SD card image boyutunu artır
 FILE="target/linux/mediatek/image/filogic.mk"
 if [ -f "$FILE" ]; then
-    echo "Patching $FILE..."
-    sed -i 's/\(bs=\)[0-9]*\(M conv=sync\)/\1128\2/g' "$FILE"
-    sed -i 's/> [0-9]\{8,\})/> 999999999)/g' "$FILE"
-    echo "Done"
-    grep -n "bs=.*M conv=sync" "$FILE" | head -5
+    echo "Patching $FILE"
+    # SD card boyut limitini kaldır
+    sed -i '/too big/d' "$FILE"
+    sed -i 's/\(SDCARD_SIZE.*\)[0-9]\{5,\}/\1999999/g' "$FILE"
+    echo "Patch done"
+    grep -n "SDCARD_SIZE\|too big" "$FILE" | head -10
 else
-    echo "ERROR: $FILE not found!"
-    ls target/linux/mediatek/image/ || echo "Directory not found"
+    echo "File not found, listing dir:"
+    ls target/linux/mediatek/image/ 2>/dev/null || echo "Dir not found"
 fi
