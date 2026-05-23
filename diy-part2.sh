@@ -1,3 +1,3 @@
 #!/bin/bash
-# Part 2: Runs after feeds install, before compile
-# Nothing needed
+sed -i 's/CONFIG_TARGET_ROOTFS_PARTSIZE=.*/CONFIG_TARGET_ROOTFS_PARTSIZE=512/' .config || \
+echo "CONFIG_TARGET_ROOTFS_PARTSIZE=512" >> .config
